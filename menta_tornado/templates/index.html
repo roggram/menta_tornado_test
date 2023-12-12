@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="row">
+	<div class="col-md-6 offset-md-2">
+		<form method="post" action="/" class="form row">
+			<div class="form-group col">
+				<select name="q" class="form-control my-4">
+					<option value="" {% if q=="" %} selected {% end %}>並び順を選択</option>
+					<option value="asc" {% if q=="asc" %} selected {% end %}>古い順</option>
+					<option value="desc" {% if q=="desc" %} selected {% end %}>新しい順</option>
+				</select>
+			</div>
+			<div class="form-group col">
+				<input type="submit" value="並び替える" class="btn btn-success my-4">
+			</div>
+		</form>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-8 offset-md-2">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>id</th>
+					<th>タスク</th>
+					<th>登録日</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for task in tasks %}
+					<tr>
+						<td>{{ task["id"] }}</td>
+						<td>{{ task["title"] }}</td>
+						<td>{{ task["created_at"] }}</td>
+					</tr>
+				{% end %}
+			</tbody>
+		</table>
+    </div>
+</div>
+{% end %}
