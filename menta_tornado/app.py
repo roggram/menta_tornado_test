@@ -24,14 +24,15 @@ class MainHandler(tornado.web.RequestHandler):
 
   def post(self):
     tasks = data()
+    taskss = []
     q = self.get_argument('q')
     print(q)
     if q == "desc":
-      sorted(tasks, key=lambda o:o['created_at'])
+      taskss = sorted(tasks, key=lambda o:o['created_at'])
     elif q == "asc":
       #tasksをcreated_atの値をキーとして降順に並べる
-      sorted(tasks, key=lambda o:o['created_at'], reverse=True)
-    self.render("index.html", tasks=tasks, q=q)
+      taskss = sorted(tasks, key=lambda o:o['created_at'], reverse=True)
+    self.render("index.html", taskss=taskss, q=q)
 
 application = tornado.web.Application([
   (r"/", MainHandler),
