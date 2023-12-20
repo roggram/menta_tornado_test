@@ -18,9 +18,9 @@ def data():
 class MainHandler(tornado.web.RequestHandler):
 
   def get(self):
-    tasks = data()
+    taskss = data()
     q = ""
-    self.render("index.html", tasks=tasks, q=q)
+    self.render("index.html", taskss=taskss, q=q)
 
   def post(self):
     tasks = data()
