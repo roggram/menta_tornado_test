@@ -3,7 +3,10 @@ import tornado.ioloop
 import tornado.web
 from pathlib import Path
 import datetime
+# 道添以下一行を追加
+from pymongo import MongoClient
 
+""" 
 def data():
   base_time = datetime.datetime(2023,11, 10, 12 ,00 ,00)
   tasks = [
@@ -14,25 +17,35 @@ def data():
     { "id":5, "title":"美容室に行く", "created_at":base_time - datetime.timedelta(6) }
   ]
   return tasks
+ """
+# 上のメソッドを以下のように書き換えてデータ自体はmongoDBで手動で入力してみるということをやります。
+client = MongoClient("localhost:27017")
+
+def data():
+  db = client["test_menta"]
+  collection = db["tasks_collection"]
+  tasks = collection.find()
+  return tasks
+# ですので今回はmongoDB側の作業を行う前の段階でテンプレート側以外でエラーが起きていない状態を作ればOKです
 
 class MainHandler(tornado.web.RequestHandler):
 
   def get(self):
-    taskss = data()
+    tasks = data()
     q = ""
-    self.render("index.html", taskss=taskss, q=q)
+    self.render("index.html", tasks=tasks, q=q)
 
   def post(self):
     tasks = data()
-    taskss = []
+    tasks = []
     q = self.get_argument('q')
     print(q)
     if q == "desc":
-      taskss = sorted(tasks, key=lambda o:o['created_at'])
+      tasks = sorted(tasks, key=lambda o:o['created_at'])
     elif q == "asc":
       #tasksをcreated_atの値をキーとして降順に並べる
-      taskss = sorted(tasks, key=lambda o:o['created_at'], reverse=True)
-    self.render("index.html", taskss=taskss, q=q)
+      tasks = sorted(tasks, key=lambda o:o['created_at'], reverse=True)
+    self.render("index.html", tasks=tasks, q=q)
 
 application = tornado.web.Application([
   (r"/", MainHandler),
