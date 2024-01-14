@@ -28,7 +28,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				{% for task in taskss %}
+				{% for task in tasks %}
 					<tr>
 						<td>{{ task["id"] }}</td>
 						<td>{{ task["title"] }}</td>
@@ -36,6 +36,17 @@
 					</tr>
 				{% end %}
 			</tbody>
+			<!-- 道添記述 -->
+			<!-- <form action="/submit" method="post">
+				<label for="">タスク：</label>
+				<input type="text" id="task" name="task">
+				<br>
+				<label for="registration_date">登録日：</label>
+				<input type="text" id="registration_date" name="registration_date">
+
+				<button>登録</button>
+				<br> -->
+			<!-- 道添記述 終-->
 		</table>
     </div>
 </div>
